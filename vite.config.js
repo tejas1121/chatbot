@@ -3,5 +3,15 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/chatbot/'  
+  base: '/chatbot/',
+
+  server: {
+    proxy: {
+      '/api/quotes': {
+        target: 'https://zenquotes.io',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/quotes/, '')
+      }
+    }
+  }
 })
