@@ -6,7 +6,7 @@ import './App.css'
 
 
  
-      
+//app component is the main component of the application. It is responsible for rendering the chat messages and the chat input. It also manages the state of the chat messages.      
 
       
 
