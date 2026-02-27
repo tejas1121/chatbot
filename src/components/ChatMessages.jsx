@@ -15,10 +15,11 @@ function ChatMessages({ chatMessages }) {
             {chatMessages.map((chatMessage) => {
               return (
                 <ChatMessage
-                  message={chatMessage.message}
-                  sender={chatMessage.sender}
-                  key={chatMessage.id}
-                />
+  message={chatMessage.message}
+  sender={chatMessage.sender}
+  time={chatMessage.time}
+  key={chatMessage.id}
+/>
               );
             })}
           </div>

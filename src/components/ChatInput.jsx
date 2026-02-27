@@ -2,6 +2,17 @@ import { useState } from 'react';
 import './ChatInput.css';
 import { getBotResponse } from "../services/chatbotPlugins";
 
+/* ---------- TIME HELPER ---------- */
+
+function getCurrentTime() {
+  return new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+/* ---------- COMPONENT ---------- */
+
 function ChatInput({ chatMessages, setChatMessages }) {
 
   const [inputText, setInputText] = useState('');
@@ -22,30 +33,30 @@ function ChatInput({ chatMessages, setChatMessages }) {
   async function sendMessage() {
     if (!inputText.trim()) return;
 
+    // USER MESSAGE
     const userMessage = {
       message: inputText,
       sender: "user",
-      id: crypto.randomUUID()
+      id: crypto.randomUUID(),
+      time: getCurrentTime()
     };
 
-    // show user message
     setChatMessages(prev => [...prev, userMessage]);
 
     const userText = inputText;
     setInputText("");
 
-    // get response from plugin engine
+    // BOT RESPONSE
     const response = await getBotResponse(userText);
 
-    // show robot reply
-    setChatMessages(prev => [
-      ...prev,
-      {
-        message: response,
-        sender: "robot",
-        id: crypto.randomUUID()
-      }
-    ]);
+    const robotMessage = {
+      message: response,
+      sender: "robot",
+      id: crypto.randomUUID(),
+      time: getCurrentTime()
+    };
+
+    setChatMessages(prev => [...prev, robotMessage]);
   }
 
   /* ---------- UI ---------- */
